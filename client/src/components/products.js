@@ -548,7 +548,7 @@ function  Item (props)
    
     return(
       <div className="new-card">
-      <Card className=' prod-card1' >
+      <Card className='prod-card1' >
       <span style={{textAlign:'left'}}><Badge style={{marginLeft:'8px'}} className='bg-primary'>{Math.ceil((1-(product.sp/product.mrp))*100)} %OFF</Badge></span>
         <CardImg  className="prod-img1"  src={img}/>
         <CardBody className="prod-card-body1">
@@ -556,9 +556,10 @@ function  Item (props)
     <CardText className='prod-text1' ><strong  >{product.productname}</strong><strong >{' '}{product.quantity}</strong></CardText>
     <CardText className='prod-text2' ><strong><span className='fa fa-rupee'></span> {product.sp}</strong><strong ><strike style={{color:"grey"}}>{product.mrp}</strike></strong></CardText>
     </div>
-    <div className="cart2">
+    <div className="cart2 col-12">
             {state?(<p><button className="addtocart" onClick={handlestate}><span style={{textAlign:"center"}}><strong>ADD TO CART</strong></span></button></p>)
-            :(      <div className="cart-line"><button className=" addtocart2 cartbutton" onClick={handledecrement}>-</button><span className="quantity" style={{fontSize:"1rem"}}><b >{count}</b></span><button className="cartbuttonr  addtocart2 " onClick={handleincrement}>+</button></div>
+            :(      <div className="cart-line row"><div className="col-1"><button className=" addtocart2 cartbutton" onClick={handledecrement}>-</button></div><div className="quantity col-1" style={{fontSize:"1rem"}}><b >{count}</b></div><div className="col-1"><button className="cartbuttonr  addtocart2 " onClick={handleincrement}>+</button></div></div>
+                    
             )}
             </div>
         </CardBody>
@@ -590,7 +591,7 @@ function  Item (props)
           console.log("dispacthed")
         }, [])
         
-    
+        
         
         const {products,error} =  productsList;
      
@@ -619,7 +620,7 @@ function  Item (props)
             {
               return(
                 
-                <div key={item._id} className="col-10 offset-1  offset-sm-0 col-md-3">
+                <div key={item._id} className="col-10 offset-1  offset-sm-0 col-md-4 col-lg-3">
                   <RenderItem product={item}/>
                   </div>
         
@@ -630,7 +631,7 @@ function  Item (props)
     
             const re='/'+props.location.search.split('?subcategory=')[0].split('?category=')[1]
             var open=true
-            if(window.innerWidth<1025)
+            if(window.innerWidth<1100)
             {
               open=false
               
@@ -659,7 +660,8 @@ function  Item (props)
                 <>
          {/* <div className='overlay'>
          <Searchbar back={re} heading={props.location.search.split('?subcategory=')[1]}/>
-           
+                       :(      <div className="cart-line"><button className=" addtocart2 cartbutton" onClick={handledecrement}>-</button><span className="quantity" style={{fontSize:"1rem"}}><b >{count}</b></span><button className="cartbuttonr  addtocart2 " onClick={handleincrement}>+</button></div>
+
          <Menu className="sidebar1" isOpen={true} customBurgerIcon={false} width={ '11rem' } noOverlay>
               <div className="container">
                 <div className="row">

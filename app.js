@@ -22,7 +22,8 @@ const cors=require('cors');
 
 var compression = require('compression')
 
- 
+
+const buildPath = path.join(__dirname, '..', 'build');
  
 // compress all responses
 
@@ -40,6 +41,7 @@ connect.then((db) => {
 var app = express();
 app.use(cors());
 
+app.use(express.static(buildPath));
 app.use(express.static(path.join(__dirname+'public\images')));
 app.use(compression())
 app.use(bodyParser.json({

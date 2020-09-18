@@ -140,11 +140,7 @@ function dynamic()
           <img src={`${process.env.PUBLIC_URL}/images/homescreen1.png`} className="d-block w-100" style={{height:"300px"}}></img>
           <img src={`${process.env.PUBLIC_URL}/images/homescreen4.png`} className="d-block w-100"style={{height:"300px"}}></img>
           <img src={`${process.env.PUBLIC_URL}/images/homescreen2.jpeg`} className="d-block w-100"style={{height:"300px"}}></img>
-          <img src={`${process.env.PUBLIC_URL}/images/surf.jpg`} className="d-block w-100"style={{height:"300px"}}></img>
-          <img src={`${process.env.PUBLIC_URL}/images/surf2.jpg`} className="d-block w-100"style={{height:"300px"}}></img>
-          <img src={`${process.env.PUBLIC_URL}/images/surf2.jpg`} className="d-block w-100"style={{height:"300px"}}></img>
-          <img src={`${process.env.PUBLIC_URL}/images/surf2.jpg`} className="d-block w-100"style={{height:"300px"}}></img>
-          <img src={`${process.env.PUBLIC_URL}/images/surf2.jpg`} className="d-block w-100"style={{height:"300px"}}></img>
+        
           
         </Carousel>
         

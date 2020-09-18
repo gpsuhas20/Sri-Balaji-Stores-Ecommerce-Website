@@ -1,12 +1,13 @@
 import React,{useState,useEffect} from 'react'
 import Cookie from 'js-cookie'
-
+import { slide as Menu } from 'react-burger-menu'
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import {Modal,ModalBody,ModalHeader, Button, Form, FormGroup, Label, Input} from 'reactstrap'
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history'
+import baseurl from '../baseurl'
 const history=createBrowserHistory()
 
 
@@ -143,12 +144,94 @@ function Login(props)
       
        
     }
+    var signup="SignIn"
+ 
+  var logincoookie=(Cookie.getJSON('login'))||false
+  console.log(logincoookie)
+  if(logincoookie)
+  {
+    console.log("bye")
+    const logintype=(Cookie.getJSON('modeoflogin'))||''
+    if(logintype==="normal")
+    {const signup1=(Cookie.getJSON('userInfo'))||{name:"SignIn"}
+    signup=signup1.name}
+
+   
+    else
+    {
+      const signup1=(Cookie.getJSON('userInfo'))||{user:{name:"SignIn"}}
+      signup=signup1.user.name
+    }
+  }
+  const [isOpen, setSide] = useState(false)
+  function handleClick()
+  {
+    setSide(!isOpen)
+  }
+  function logout()
+{
+    localStorage.clear()
+    Cookie.remove('userInfo')
+    Cookie.remove('modeoflogin')
+    Cookie.remove('login')
+   // localStorage.setItem('login',JSON.stringify(false))
+ 
+    window.location.reload(false)
+    
+    
+}
+
 
    
    
     return(
         <>
-        <div className='login-heading'>LOGIN FORM</div>
+          <Menu className="sidebar" isOpen={ isOpen } customBurgerIcon={false}>
+    <div className="container">
+      <div className="row">
+    <div className="col-12 navtop"><div className="row"><div className="offset-1 col-7">{logincoookie?(<p  style={{cursor:"pointer"}}><span className="fa fa-user" style={{marginRight:"2px"}}></span>{signup}</p>):(<p  style={{cursor:"pointer"}}><span className="fa fa-sign-in"></span>Signin</p>)}</div><p onClick={handleClick} className=" col-2 fa fa-arrow-left "style={{cursor:"pointer"}}></p></div></div>
+   <div className="side-items">
+   <div className="col-12 container"><a href ='/home'className="menu-item row"><span className="fa fa-home fa-lg offset-1 offset-sm-2  offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2  col-7 col-sm-6">Home</span></a></div> 
+   <div className="col-12 container" onClick={()=>setSide(false)}><a href ='#accordian'className="menu-item row"><span className="fa fa-th-large fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> Categories</span></a></div> 
+   <div className="col-12 container"><a href ='/myorders'className="menu-item row"><span className="fa fa-th-list fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6">  MyOrders</span></a></div> 
+   <div className="col-12 container"><a href ='/myaccount'className="menu-item row"><span className="fa fa-user fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> MyAccount</span></a></div> 
+   <div className="col-12 container"><a href ='/aboutus'className="menu-item row"><span className="fa fa-info fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> AboutUs</span></a></div> 
+   <div className="col-12 container"><a href ='/developedby'className="menu-item row"><span className="fa fa-connectdevelop fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> DevelopedBy</span></a></div> 
+   <div className="col-12 container"><a onClick={logout} style={{cursor:"pointer"}} className="menu-item row"><span className="fa fa-sign-out fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> LogOut</span></a></div> 
+
+ 
+   </div>
+ </div>
+ </div>
+</Menu>
+
+<nav className="navbar fixed-top navbar-light bg-dark">
+<a className="navbar-brand"  onClick={handleClick}><span className="fa fa-bars fa-lg navicon" style={{color:"white"}}></span>
+
+</a>
+
+<ul className="navbar-nav">
+<li className="nav-item col-1 col-lg-5">
+ <a className="nav-link" href="/"><img src={`${process.env.PUBLIC_URL}/images/logo.jpg`}style={{width:"2.7rem"},{height:"2.7rem"}}></img>
+</a>
+</li>
+  
+</ul>
+<span className="nav-item col-7 col-lg-7 font-name">Sri Balaji Stores</span>
+</nav>
+<div className="container spacingforheader"> 
+<div className="row">
+    <div className="col-12">bye</div>
+    <div className="col-12">        
+    ..
+    </div>
+    <div className="col-12"></div>
+    <div className="col-12"></div><div className="col-12"></div>
+  
+</div>
+</div>
+
+        <div className='login-heading'><strong>LOGIN</strong></div>
             <Form className='container login-form ' >
                     <FormGroup className='login-input'>
                         <Label   htmlFor='email'><strong> Email</strong> </Label>
@@ -166,21 +249,22 @@ function Login(props)
                         
                     </FormGroup>
                     <FormGroup className='row'>
-                        <Button className='col-10 col-sm-4' style={{marginLeft:'1rem'}} type='submit' onClick={(e)=>handlelogin(e)}  color='primary'><span className='fa fa-paper-plane fa-lg' ></span> LOGIN </Button>
+                        <Button className='col-10 col-sm-4 ml-3' style={{marginLeft:'1rem'}} type='submit' onClick={(e)=>handlelogin(e)}  color='primary'><span className='fa fa-paper-plane fa-lg' ></span> LOGIN </Button>
                     </FormGroup>
                    
               
 <FormGroup className='row'>
                 <FacebookLogin 
     appId="316383022969965" 
-
+                            className='col-10 col-sm-4'
     fields="name,email,picture"
     autoLoad={false}
     callback={responseFacebook}
+    cssClass="my-facebook-button-class"
+    icon=" fa fa-facebook"
     
-    render={renderProps => (
-        <span className='col-10 col-sm-4 fa fa-facebook' onClick={renderProps.onClick} disabled={renderProps.disabled}>Login With facebook</span>
-      )}
+    
+  
      />
      </FormGroup>
 
@@ -190,11 +274,11 @@ function Login(props)
         onSuccess={responsegoogle}
         onFailure={responsegoogle}
         render={renderProps => (
-          <Button  className='col-10 col-sm-4'
+          <Button  className='col-10 col-sm-4 google-button'
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
             style={{marginLeft:'1rem'}}
-          ><span className='fa fa-google'></span>
+          ><span className='fa fa-google '></span>
             Login With Google
           </Button>
         )}/> 

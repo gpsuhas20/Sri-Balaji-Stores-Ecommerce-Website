@@ -188,9 +188,9 @@ return(
 <CardText className='prod-text2' ><strong><span className='fa fa-rupee'></span> {product.sp}</strong><strong ><strike style={{color:"grey"}}>{product.mrp}</strike></strong></CardText>
 </div>
 <div className="cart2">
-        {state?(<p><button className="addtocart" onClick={handlestate}><span style={{textAlign:"center"}}><strong>ADD TO CART</strong></span></button></p>)
-        :(      <div className="cart-line"><button className=" addtocart2 cartbutton" onClick={handledecrement}>-</button><span className="quantity" style={{fontSize:"1rem"}}><b >{count}</b></span><button className="cartbuttonr  addtocart2 " onClick={handleincrement}>+</button></div>
-        )}
+        {state?(<p><button className="addtocarts" onClick={handlestate}><span style={{textAlign:"center"}}><strong>ADD TO CART</strong></span></button></p>)
+            :(      <div className="cart-line row"><div className="col-1"><button className=" addtocart2 cartbutton" onClick={handledecrement}>-</button></div><div className="quantity col-1" style={{fontSize:"1rem"}}><b >{count}</b></div><div className="col-1"><button className="cartbuttonr  addtocart2 " onClick={handleincrement}>+</button></div></div>
+            )}
         </div>
     </CardBody>
   </Card>

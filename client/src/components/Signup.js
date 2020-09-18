@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import Cookie from 'js-cookie'
 import { createBrowserHistory } from 'history'
-
+import { slide as Menu } from 'react-burger-menu'
 
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
@@ -205,12 +205,94 @@ const [isSuccessOpen1, setSuccessOpen1] = useState(false);
       
    }
    }
+
+   var signup="SignIn"
+ 
+  var logincoookie=(Cookie.getJSON('login'))||false
+  console.log(logincoookie)
+  if(logincoookie)
+  {
+    console.log("bye")
+    const logintype=(Cookie.getJSON('modeoflogin'))||''
+    if(logintype==="normal")
+    {const signup1=(Cookie.getJSON('userInfo'))||{name:"SignIn"}
+    signup=signup1.name}
+
+   
+    else
+    {
+      const signup1=(Cookie.getJSON('userInfo'))||{user:{name:"SignIn"}}
+      signup=signup1.user.name
+    }
+  }
+
+  const [isOpen, setSide] = useState(false)
+  function handleClick()
+  {
+    setSide(!isOpen)
+  }
+  function logout()
+{
+    localStorage.clear()
+    Cookie.remove('userInfo')
+    Cookie.remove('modeoflogin')
+    Cookie.remove('login')
+   // localStorage.setItem('login',JSON.stringify(false))
+   
+    window.location.reload(false)
+    
+    
+}
+
     return(
 
         <>
+          <Menu className="sidebar" isOpen={ isOpen } customBurgerIcon={false}>
+    <div className="container">
+      <div className="row">
+    <div className="col-12 navtop"><div className="row"><div className="offset-1 col-7">{logincoookie?(<p  style={{cursor:"pointer"}}><span className="fa fa-user" style={{marginRight:"2px"}}></span>{signup}</p>):(<p  style={{cursor:"pointer"}}><span className="fa fa-sign-in"></span>Signin</p>)}</div><p onClick={handleClick} className=" col-2 fa fa-arrow-left "style={{cursor:"pointer"}}></p></div></div>
+   <div className="side-items">
+   <div className="col-12 container"><a href ='/home'className="menu-item row"><span className="fa fa-home fa-lg offset-1 offset-sm-2  offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2  col-7 col-sm-6">Home</span></a></div> 
+   <div className="col-12 container" onClick={()=>setSide(false)}><a href ='#accordian'className="menu-item row"><span className="fa fa-th-large fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> Categories</span></a></div> 
+   <div className="col-12 container"><a href ='/myorders'className="menu-item row"><span className="fa fa-th-list fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6">  MyOrders</span></a></div> 
+   <div className="col-12 container"><a href ='/myaccount'className="menu-item row"><span className="fa fa-user fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> MyAccount</span></a></div> 
+   <div className="col-12 container"><a href ='/aboutus'className="menu-item row"><span className="fa fa-info fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> AboutUs</span></a></div> 
+   <div className="col-12 container"><a href ='/developedby'className="menu-item row"><span className="fa fa-connectdevelop fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> DevelopedBy</span></a></div> 
+   <div className="col-12 container"><a onClick={logout} style={{cursor:"pointer"}} className="menu-item row"><span className="fa fa-sign-out fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> LogOut</span></a></div> 
 
-                <Form>
-                    <FormGroup>
+ 
+   </div>
+ </div>
+ </div>
+</Menu>
+        <nav className="navbar fixed-top navbar-light bg-dark">
+<a className="navbar-brand" onClick={handleClick} ><span className="fa fa-bars fa-lg navicon" style={{color:"white"}}></span>
+
+</a>
+
+<ul className="navbar-nav">
+<li className="nav-item col-1 col-lg-5">
+ <a className="nav-link" href="/"><img src={`${process.env.PUBLIC_URL}/images/logo.jpg`}style={{width:"2.7rem"},{height:"2.7rem"}}></img>
+</a>
+</li>
+  
+</ul>
+<div className="nav-item col-7 col-lg-7 font-name"  >Sri Balaji Stores</div>
+</nav>
+<div className="container spacingforheader"> 
+<div className="row">
+    <div className="col-12">bye</div>
+    <div className="col-12">        
+    ..
+    </div>
+    <div className="col-12"></div>
+    <div className="col-12"></div><div className="col-12"></div>
+  
+</div>
+</div>
+               <div className='login-heading'><strong>SIGN UP</strong></div>
+                <Form className='container login-form '>
+                    <FormGroup className='login-input'>
                         <Label htmlFor='email'><strong> Email</strong> </Label>
                         <Input type='email' name='email2' id='email2' placeholder='Email'  onChange= {(e)=> setEmail2(e.target.value) } onBlur={(e)=>formValidation6(e.target.value)}></Input>
                         {Object.keys(emailerror2).map((key)=>{
@@ -220,7 +302,7 @@ const [isSuccessOpen1, setSuccessOpen1] = useState(false);
                                 return <p></p>
                             })}  
                     </FormGroup>
-                    <FormGroup>
+                    <FormGroup className='login-input'>
                         <Label htmlFor='password'> <strong>Password</strong></Label>
                         <Input type='password' name='password2' id='password2' placeholder='Password' onChange={(e)=> setPassword2(e.target.value)} onBlur={(e)=>formValidation7(e.target.value)}></Input>
                         {Object.keys(passworderror2).map((key)=>{
@@ -230,7 +312,7 @@ const [isSuccessOpen1, setSuccessOpen1] = useState(false);
                                 return <p></p>
                             })} 
                     </FormGroup>
-                    <FormGroup>
+                    <FormGroup className='login-input'>
                         <Label htmlFor='repassword'> <strong>Confirm Password</strong></Label>
                         <Input type='password' name='repassword2' id='repassword2' placeholder=' Confirm Password' onChange={(e)=> setRepassword2(e.target.value)} onBlur={(e)=>formValidation8()}></Input>
                         {Object.keys(repassworderror2).map((key)=>{
@@ -241,39 +323,43 @@ const [isSuccessOpen1, setSuccessOpen1] = useState(false);
                             })} 
                     </FormGroup>
                     <FormGroup className='row'>
-                        <Button className='col-10 col-sm-6 offset-sm-3' type='submit'  onClick={(e)=>handleSignup(e)} color='primary'><span className='fa fa-paper-plane fa-lg' ></span>  Submit </Button>
+                        <Button className='col-10 col-sm-4 ml-3' type='submit'  onClick={(e)=>handleSignup(e)} color='primary'><span className='fa fa-paper-plane fa-lg bg-primary' ></span>  Signup </Button>
+                        <Button className="btn ml-2 col-4 bg-success" onClick={redirectlogin}>Already have an account?</Button>
                     </FormGroup>
                    
               
-
+<FormGroup className="row col-10 col-sm-5">
                 <FacebookLogin
             appId="316383022969965" 
-
+              
             fields="name,email,picture"
             autoLoad={false}
             callback={responseFacebooksignup}
     
-    render={renderProps => (
-        <button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom FB button</button>
-      )}
+            cssClass="my-facebook-button-class"
+            icon="fa-facebook"
      />
-   <GoogleLogin
+
+</FormGroup>
+
+<FormGroup className="row">
+   <GoogleLogin 
+    
         clientId="323182642781-39lt59q309bkj7n90486390v79tt2jip.apps.googleusercontent.com"
         onSuccess={responsegooglesignup}
         onFailure={responsegooglesignup}
         render={renderProps => (
-          <button
+          <Button  className='col-10 col-sm-4  google-button'
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
-            className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline'
-          >
-            <div className=' p-2 rounded-full '>
-              <i className='fab fa-google ' />
-            </div>
-            <span className='ml-4'>Sign In with Google</span>
-          </button>
-        )}/> 
-         <Button className="btn" onClick={redirectlogin}>Already have an account?</Button>
+            style={{marginLeft:'1rem'}}
+          ><span className='fa fa-google'></span>
+            Login With Google
+          </Button>
+        )}/>
+
+        </FormGroup> 
+        
          </Form>
 
          <div className="container">

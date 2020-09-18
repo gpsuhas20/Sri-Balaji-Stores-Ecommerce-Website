@@ -92,6 +92,8 @@ import {
     addToCart,
     removeFromCart
   } from '../redux/actions/cartactions';
+import Cookie from 'js-cookie'
+import { slide as Menu } from 'react-burger-menu'
 
 var totalsp=0
 var totalsavings=0
@@ -407,6 +409,45 @@ function Item(props)
 const cartItems=JSON.parse(localStorage.getItem('newcart'));
 const totalamount=JSON.parse(localStorage.getItem('totalsp'));
 
+
+var signup="SignIn"
+ 
+var logincoookie=(Cookie.getJSON('login'))||false
+console.log(logincoookie)
+if(logincoookie)
+{
+  console.log("bye")
+  const logintype=(Cookie.getJSON('modeoflogin'))||''
+  if(logintype==="normal")
+  {const signup1=(Cookie.getJSON('userInfo'))||{name:"SignIn"}
+  signup=signup1.name}
+
+ 
+  else
+  {
+    const signup1=(Cookie.getJSON('userInfo'))||{user:{name:"SignIn"}}
+    signup=signup1.user.name
+  }
+}
+const [isOpen, setSide] = useState(false)
+function handleClick()
+{
+  setSide(!isOpen)
+}
+function logout()
+{
+  localStorage.clear()
+  Cookie.remove('userInfo')
+  Cookie.remove('modeoflogin')
+  Cookie.remove('login')
+ // localStorage.setItem('login',JSON.stringify(false))
+
+  window.location.reload(false)
+  
+  
+}
+
+
 if(cartItems)
 {
     if(cartItems.length>0)
@@ -425,9 +466,51 @@ if(cartItems)
     })
    
   return(
+    <>
+    <Menu className="sidebar" isOpen={ isOpen } customBurgerIcon={false}>
+    <div className="container">
+      <div className="row">
+    <div className="col-12 navtop"><div className="row"><div className="offset-1 col-7">{logincoookie?(<p  style={{cursor:"pointer"}}><span className="fa fa-user" style={{marginRight:"2px"}}></span>{signup}</p>):(<p  style={{cursor:"pointer"}}><span className="fa fa-sign-in"></span>Signin</p>)}</div><p onClick={handleClick} className=" col-2 fa fa-arrow-left "style={{cursor:"pointer"}}></p></div></div>
+   <div className="side-items">
+   <div className="col-12 container"><a href ='/home'className="menu-item row"><span className="fa fa-home fa-lg offset-1 offset-sm-2  offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2  col-7 col-sm-6">Home</span></a></div> 
+   <div className="col-12 container" onClick={()=>setSide(false)}><a href ='#accordian'className="menu-item row"><span className="fa fa-th-large fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> Categories</span></a></div> 
+   <div className="col-12 container"><a href ='/myorders'className="menu-item row"><span className="fa fa-th-list fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6">  MyOrders</span></a></div> 
+   <div className="col-12 container"><a href ='/myaccount'className="menu-item row"><span className="fa fa-user fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> MyAccount</span></a></div> 
+   <div className="col-12 container"><a href ='/aboutus'className="menu-item row"><span className="fa fa-info fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> AboutUs</span></a></div> 
+   <div className="col-12 container"><a href ='/developedby'className="menu-item row"><span className="fa fa-connectdevelop fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> DevelopedBy</span></a></div> 
+   <div className="col-12 container"><a onClick={logout} style={{cursor:"pointer"}} className="menu-item row"><span className="fa fa-sign-out fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> LogOut</span></a></div> 
+
+ 
+   </div>
+ </div>
+ </div>
+</Menu>
+
+<nav className="navbar fixed-top navbar-light bg-dark">
+<a className="navbar-brand"  onClick={handleClick}><span className="fa fa-bars fa-lg navicon" style={{color:"white"}}></span>
+
+</a>
+
+<ul className="navbar-nav">
+<li className="nav-item col-1 col-lg-5">
+ <a className="nav-link" href="/"><img src={`${process.env.PUBLIC_URL}/images/logo.jpg`}style={{width:"2.7rem"},{height:"2.7rem"}}></img>
+</a>
+</li>
+  
+</ul>
+<span className="nav-item col-7 col-lg-7 font-name" >Sri Balaji Stores</span>
+</nav>
+<div className="container spacingforheader"> 
+<div className="row">
+    <div className="col-12">bye</div>
+    <div className="col-12">        
+ </div><div className="col-12"></div>
+  
+</div>
+</div>
     <div className="container">
     <div className="row row-content">
-      <div className='col-12'>
+      <div className='col-12 mt-3'>
            <div className="allpageheader">
                <h1><img src="/images/mycart.png" className="icons ml-2" alt="icons"></img> My Cart</h1>
            </div>
@@ -478,6 +561,7 @@ if(cartItems)
      
      </div>
      </div>
+     </>
        )}
        else
        {
@@ -498,7 +582,50 @@ if(cartItems)
   
        else
     {
-        return( <div className="" >
+        return( 
+        <>
+                 <Menu className="sidebar" isOpen={ isOpen } customBurgerIcon={false}>
+        <div className="container">
+          <div className="row">
+        <div className="col-12 navtop"><div className="row"><div className="offset-1 col-7">{logincoookie?(<p  style={{cursor:"pointer"}}><span className="fa fa-user" style={{marginRight:"2px"}}></span>{signup}</p>):(<p  style={{cursor:"pointer"}}><span className="fa fa-sign-in"></span>Signin</p>)}</div><p onClick={handleClick} className=" col-2 fa fa-arrow-left "style={{cursor:"pointer"}}></p></div></div>
+       <div className="side-items">
+       <div className="col-12 container"><a href ='/home'className="menu-item row"><span className="fa fa-home fa-lg offset-1 offset-sm-2  offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2  col-7 col-sm-6">Home</span></a></div> 
+       <div className="col-12 container" onClick={()=>setSide(false)}><a href ='#accordian'className="menu-item row"><span className="fa fa-th-large fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> Categories</span></a></div> 
+       <div className="col-12 container"><a href ='/myorders'className="menu-item row"><span className="fa fa-th-list fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6">  MyOrders</span></a></div> 
+       <div className="col-12 container"><a href ='/myaccount'className="menu-item row"><span className="fa fa-user fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> MyAccount</span></a></div> 
+       <div className="col-12 container"><a href ='/aboutus'className="menu-item row"><span className="fa fa-info fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> AboutUs</span></a></div> 
+       <div className="col-12 container"><a href ='/developedby'className="menu-item row"><span className="fa fa-connectdevelop fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> DevelopedBy</span></a></div> 
+       <div className="col-12 container"><a onClick={logout} style={{cursor:"pointer"}} className="menu-item row"><span className="fa fa-sign-out fa-lg offset-1 offset-sm-2 offset-lg-2 col-1 p-1"></span><span className="offset-1 offset-sm-2 col-7 col-sm-6"> LogOut</span></a></div> 
+    
+     
+       </div>
+     </div>
+     </div>
+    </Menu>
+    
+    <nav className="navbar fixed-top navbar-light bg-dark">
+    <a className="navbar-brand"  onClick={handleClick}><span className="fa fa-bars fa-lg navicon" style={{color:"white"}}></span>
+    
+    </a>
+    
+    <ul className="navbar-nav">
+    <li className="nav-item col-1 col-lg-5">
+     <a className="nav-link" href="/"><img src={`${process.env.PUBLIC_URL}/images/logo.jpg`}style={{width:"2.7rem"},{height:"2.7rem"}}></img>
+    </a>
+    </li>
+      
+    </ul>
+    <span className="nav-item col-7 col-lg-7 font-name" >Sri Balaji Stores</span>
+    </nav>
+    <div className="container spacingforheader"> 
+    <div className="row">
+        <div className="col-12">bye</div>
+        <div className="col-12">        
+     </div><div className="col-12"></div>
+      
+    </div>
+    </div>
+        <div className="" >
         <img className="emptycart mt-5" src={`${process.env.PUBLIC_URL}/images/emptycart.jpg`}/>
         <p style={{color:"orangered"}}><strong>No items in your cart</strong></p>
         <p>Your favourite items are just a click away</p>
@@ -508,7 +635,9 @@ if(cartItems)
           }}>
         <p><Button className="emptycartbutton">Start Shopping</Button></p>
         </Link>
-    </div>)
+    </div>
+    </>
+    )
     }
       }
  export default Item
